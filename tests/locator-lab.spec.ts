@@ -9,9 +9,16 @@ test('locator laboratory', async ({ page }) => {
     console.log(`FoundA: ${count}`);
     const count1 = await page.getByText('Get started with Playwright', { exact: true }).count();
     console.log(`FoundB: ${count1}`);
+    await expect(page.getByRole('heading', {name: /Playwright enables reliable web automation/})).toBeVisible();
+
+    const getStartedLink = page.getByRole('link', { name: 'Get started' });
+    await expect(getStartedLink).toBeVisible();
+    await expect(getStartedLink).toHaveAttribute('href', '/docs/intro');
+    await getStartedLink.click();
 
     await expect(page).toHaveTitle(/Playwright/);
-    await expect(page.getByRole('heading', {name: /Playwright enables reliable web automation/})).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Installing PlaywrightDirect' })).toBeVisible();
+
     /*
     await page.getByRole('heading', { name: 'Playwright enables reliable' }).click();
     await page.getByRole('link', { name: 'Get started' }).click();
